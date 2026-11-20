@@ -16,6 +16,9 @@ const post = JSON.parse(readFileSync(postPath, 'utf8'));
 if (typeof post !== 'object' || post === null || typeof post.url !== 'string' || post.url.length === 0) {
   throw new Error('POST.json must be a JSON object with a non-empty string "url" field');
 }
+if (!post.url.startsWith('https://x.com/')) {
+  throw new Error('POST.json "url" must be an https://x.com/ post address');
+}
 
 mkdirSync(OUTPUT_DIR, { recursive: true });
 copyFileSync(postPath, join(OUTPUT_DIR, 'POST.json'));
